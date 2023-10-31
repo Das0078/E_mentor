@@ -1,6 +1,7 @@
 const express=require('express');
 const mongoose=require('mongoose');
 const multer = require('multer');
+const { mentor_log, form_render } = require('./routes/mentor');
 
 const Form=require("./form_model");
 const Mentors=require('./mentor.model')
@@ -10,11 +11,13 @@ const app=express();
 // const { v4: uuidv4 } = require('uuid');
 // require('./client/src/images/')
 const cors=require('cors');
+
 app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(mentor_log)
+app.use(form_render)
 let getImage=[];
 
 mongoose.connect("mongodb://127.0.0.1:27017/Form",{useNewUrlParser:true}).then(()=>{
@@ -166,24 +169,22 @@ try {
   
 }
 
-
-
 })
 
 
-app.get("/render", async (req, res) => {
-  try {
-    const input = req.query.search; 
-    console.log("input",input);
-    const data = await Form.find({name:input}) // Assuming Form is your Mongoose model
-    res.json(data);
-    console.log("got data",data);
+// app.get("/render", async (req, res) => {
+//   try {
+//     const input = req.query.search; 
+//     console.log("input",input);
+//     const data = await Form.find({name:input}) // Assuming Form is your Mongoose model
+//     res.json(data);
+//     console.log("got data",data);
 
 
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-})
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// })
 
 app.get("/mentors",async(req,res)=>{
 try {
@@ -194,20 +195,20 @@ try {
 }
 })
 
-app.get("/mentor_log",async(req,res)=>{
-  try {
-    const {email,password}=req.query;
-    console.log("bc",email,password);
+// app.get("/mentor_log",async(req,res)=>{
+//   try {
+//     const {email,password}=req.query;
+//     console.log("bc",email,password);
    
-    const mentor_db=await Mentors.find({email,password});
-    res.json(mentor_db)
-    console.log("m_db",mentor_db);
-  } catch (error) {
-  console.log("error fetching mentors data",error);
+//     const mentor_db=await Mentors.find({email,password});
+//     res.json(mentor_db)
+//     console.log("m_db",mentor_db);
+//   } catch (error) {
+//   console.log("error fetching mentors data",error);
     
-  }
+//   }
 
-})
+// })
 
 
 app.listen(5000,()=>{
