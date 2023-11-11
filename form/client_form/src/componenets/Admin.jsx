@@ -11,8 +11,9 @@ const Admin = () => {
         console.log("clicked");
         axios.get('/render', { params: { search } }) // Update the endpoint to your server endpoint
           .then(response => {
+            console.log("render data",response.data);
             setData(response.data);
-            console.log("render data", data[0]);
+            // console.log("render data", data[0]);
           })
           .catch(error => {
             console.error('Error fetching data:', error);
