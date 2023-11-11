@@ -5,8 +5,12 @@ import Home from './componenets/Home';
 import Admin from './componenets/Admin'
 import Mentor_log from './componenets/Mentor_log'
 
+
+
+
 const App = () => {
   return (
+   
    <Router>
    
    <Routes>
@@ -14,6 +18,7 @@ const App = () => {
     <Route path='/mentor' Component={Mentor}/>
     <Route path='/admin' Component={Admin}/>
     <Route path='/mentor_log' Component={Mentor_log}/>
+    
 
 
    </Routes>
@@ -24,6 +29,7 @@ const App = () => {
 
     
    </Router>
+   
   )
 }
 
