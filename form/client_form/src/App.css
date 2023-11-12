@@ -1,3 +1,6 @@
+body{
+  background-color: white;
+}
 .App {
   text-align: center;
 }
@@ -36,3 +39,61 @@
     transform: rotate(360deg);
   }
 }
+
+.load{
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+   height: 100vh; /*Ensure the container takes the full viewport height */
+}
+.load img{
+  width: 100px;
+}
+.intro_container {
+  height: 100vh;
+  width: 100vw;
+  background-color: #004AAD;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: azure;
+}
+.left_container h1{
+  font-size: 80px;
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
+.left_container img{
+  width: 100px;
+  margin-bottom: 2px;
+}
+.para{
+  color: azure;
+  letter-spacing: 7px;
+  margin-bottom: 50px;
+
+}
+.left_container{
+  /* border: 1px solid red; */
+  height: 60vh;
+  width: 40vw;
+}
+.left_container button{
+  padding: 10px 30px;
+  border: none;
+  border-radius: 18px;
+  background-color: rgb(18, 16, 16);
+  color: azure;
+  box-shadow:10px 10px 15px rgb(3, 14, 82);
+ transition: 0.3s;
+ cursor: pointer;
+
+}
+.left_container button:hover{
+background-color: rgb(27, 26, 26);
+box-shadow:5px 10px 15px rgb(3, 14, 82);
+}
+.right_container{
+  box-shadow: 10px 10px 15px black;
+}
+

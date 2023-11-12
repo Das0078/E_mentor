@@ -2,13 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Form from './componenets/form'
+import { Auth0Provider } from '@auth0/auth0-react';
+// import Form from './componenets/form'
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+  <Auth0Provider
+    domain="adamas-unv.us.auth0.com"
+    clientId="nOFk7v0xDnTDHV3ocnOPvzjhHzlo5suS"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+  >
+ 
+  <App />
+ 
+  </Auth0Provider>
   </React.StrictMode>
 );
 
