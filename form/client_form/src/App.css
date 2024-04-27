@@ -97,3 +97,12 @@ box-shadow:5px 10px 15px rgb(3, 14, 82);
   box-shadow: 10px 10px 15px black;
 }
 
+.page{
+  background-color: rgb(180, 203, 210);
+  color: azure;
+}
+.admin_input{
+  max-width: 30vw;
+  margin-right: 10px;
+}
+

@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import './Home.css';
 import PhoneNumber from 'libphonenumber-js';
+
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useAuth0,withAuthenticationRequired } from "@auth0/auth0-react";
+import { useNavigate} from 'react-router-dom';
+
+
 
 const isValidPhoneNumber = (phoneNumber) => {
   try {
@@ -13,6 +18,9 @@ const isValidPhoneNumber = (phoneNumber) => {
   }
 };
 const Home = () => {
+  const {user, loginWithRedirect,isAuthenticated,logout,isLoading } = useAuth0();
+  const navigate=useNavigate();
+
   const [mentor, setMentor] = useState([]);
 
   const [mentee, setMentee] = useState({
@@ -40,6 +48,7 @@ const Home = () => {
 
 
   useEffect(() => {
+ 
     // Define sec_post function inside the effect
     const sec_post = async () => {
       try {
@@ -80,6 +89,7 @@ const Home = () => {
 
 
   useEffect(() => {
+  
     axios.get('/mentors') // Update the endpoint to your server endpoint
       .then(response => {
         setMentor(response.data)
@@ -115,32 +125,25 @@ const Home = () => {
 
     // Join the array elements into a string
 
-    await axios.post("http://localhost:5000/submit-form", mentee);
+    const response=await axios.post("http://localhost:5000/submit-form", mentee)
 
+    if(response.status===203){
+      console.log("mentee");
+    }else{
+      console.log("not mentee");
+    }
 
-
-    // document.getElementById('name').value = '';
-    // document.getElementById('prog').value = '';
-    // document.getElementById('dob').value = '';
-    // document.getElementById('email').value = '';
-    // document.getElementById('mob').value = '';
-    // document.getElementById('addr').value = '';
-    // document.getElementById('mo_name').value = '';
-    // document.getElementById('mo_occup').value = '';
-    // document.getElementById('fa_name').value = '';
-    // document.getElementById('fa_occup').value = '';
-    // document.getElementById('par_anni').value = '';
-    // document.getElementById('str').value = '';
-    // document.getElementById('weak').value = '';
 
     alert("Submitted Successfully!")
 
 
   }
 
+
+
   return (
     <>
-      <form  >
+      <form  className='mentee_form'>
         <input type="file" onChange={(e) => handleFileChange(e, 0)} accept="image/*" name='files' />
         <input type="file" onChange={(e) => handleFileChange(e, 1)} accept="image/*" name='files' />
 
@@ -182,24 +185,25 @@ const Home = () => {
         )}<br />
 
 
-        <label htmlFor="str">Strenghts: </label>
+        <label htmlFor="str">Strenghts: </label> 
         <textarea name="str" onChange={handleChange} value={mentee.str} id="str" cols="30" rows="10" placeholder='str' required></textarea><br />
 
         <label htmlFor="weak">Weakness: </label>
         <textarea name="weak" onChange={handleChange} value={mentee.weak} id="weak" cols="30" rows="10" placeholder='weak' required></textarea><br />
-        <label htmlFor="mentor">Select Your Mentor: </label><br />
-        <select name="mentor" onChange={handleChange} id="Mentor">
+        {/* <label htmlFor="mentor">Select Your Mentor: </label><br /> */}
+        {/* <select name="mentor" onChange={handleChange} id="Mentor">
           <option selected disabled>select</option>
-          {mentor.map((ment,idx)=>{
+          {mentor.map((ment,idx)=>{ 
             return(
               <option value={ment._id}>{ment.name}</option>
             )
           })}
 
-        </select><br />
+        </select><br /> */}
         <button type='submit' onClick={sub}>Submit</button>
         <button type="reset">Reset</button>
       </form>
+     
 
  
 

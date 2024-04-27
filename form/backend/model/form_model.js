@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const form_schema = new mongoose.Schema({
 
-
     name: {
         type: String,
         require: true
@@ -61,6 +60,10 @@ const form_schema = new mongoose.Schema({
         type: String,
         require: true
     },
+    role:{
+        type: String,
+        required: true,
+    },
     proUrl: {
         type: String,
         required: true,
@@ -69,6 +72,10 @@ const form_schema = new mongoose.Schema({
     signUrl: {
         type: String,
         required: true,
+    },
+    log:{
+        type:Array,
+        default:[]
     }
 
 });

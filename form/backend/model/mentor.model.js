@@ -16,7 +16,20 @@ const mentor_schema = new mongoose.Schema({
     password: {
         type: String,
         require: true
-    }
+    },
+    role:{
+        type: String,
+        require: true
+    },
+    Department:{
+        type: String,
+        require: true
+    },
+    mentee_assigned:{
+        type: Number,
+        default: 0
+    },
+
 
 
 });

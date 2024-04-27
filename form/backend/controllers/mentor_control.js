@@ -1,5 +1,6 @@
 const Mentors=require('../model/mentor.model')
-const Form=require("../model/form_model")
+const Form = require("../model/Form_model");
+
 
 const reg_mentor=async(req,res)=>{
   try {
@@ -45,6 +46,19 @@ const Mentor_log=async(req,res)=>{
     }
   }
 
+  const get_all_mentees_info=async(req, res)=>{
+    try {
+      const mentor_Id = req.query.mentor_id
+      console.log("mentor_id::=>", mentor_Id);
+      const data = await Form.find({mentor_Id});
+      res.json(data)
+      console.log("all mentess::=>",data);
+    } catch (error) {
+      console.error("Error fetching all mentees info:", error);
+      
+    } 
+  }
+
 const sub_reg_mentors=async(req,res)=>{
   const mentor_data=req.body;
   console.log("Mentor data",mentor_data);
@@ -52,7 +66,10 @@ try {
   const mentor=new Mentors({
     name:mentor_data.name,
     email:mentor_data.email,
-    password:mentor_data.password
+    role:mentor_data.role,
+    Department:mentor_data.department
+
+    
 
   })
   mentor.save();
@@ -65,10 +82,16 @@ try {
 }
 
 
+const find_all_mentees=(req,res)=>{
+
+}
+
+
 
   module.exports={
     Mentor_log,
     Form_render,
     reg_mentor,
-    sub_reg_mentors
+    sub_reg_mentors,
+    get_all_mentees_info
   }

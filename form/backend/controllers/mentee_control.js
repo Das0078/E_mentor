@@ -2,7 +2,7 @@ const cloudinary = require('cloudinary').v2;
 const bodyParser = require('body-parser');
 const express = require('express')
 const app = express();
-const Form = require("../model/form_model")
+const Form=require('../model/Form_model')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -59,16 +59,25 @@ async function submitMenteeForm(req, res) {
             parents_number: data.par_num,
             strenghts: data.str,
             weakness: data.weak,
-            mentor_Id: data.mentor,
+            mentor_Id: "",
+            role:"mentee",
             proUrl: getImage[0].imageUrl,
             signUrl: getImage[1].imageUrl
         });
         await newFormData.save();
 
+        if (data.email.includes('stu')) { 
+            console.log('Data saved to MongoDB collection.');
+            res.status(203).json({ message: 'Data saved successfully' });
+        }else{
+            console.log('Data saved to MongoDB collection without mentee role.');
+            res.status(200).json({ message: 'Data saved successfully without mentee role' });
 
 
-        console.log('Data saved to MongoDB collection.');
-        res.status(200).json({ message: 'Data saved successfully' });
+        }
+
+
+        
     } catch (error) {
         console.error('Error saving data:', error);
         res.status(500).json({ error: 'An error occurred while processing the request.' });

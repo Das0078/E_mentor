@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import './form.css';
+import {useNavigate} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from 'axios';
+import html2canvas from 'html2canvas'
+// import jspdf from 'jspdf'
+// eslint-disable-next-line
+import html2pdf from 'html2pdf.js'
+import { MdDownload } from "react-icons/md";
+import { IoIosAddCircle } from "react-icons/io";
+import { FaFileAlt } from "react-icons/fa";
 
-
-
-const form = ({data,img}) => {
-
+const Form = ({data,img}) => {
+  const navigate=useNavigate()
+  const [invite_info,setInvite_info]=useState({mentor_email:"",mentee_email:""})
+  const [bool,setBool]=useState(false)
   //strenghts
   const s1=data.strenghts;
   const s_arr=s1.split(",")
@@ -13,14 +25,88 @@ const form = ({data,img}) => {
   const w1=data.weakness;
   const w_arr=w1.split(",")
   
+  const {user, loginWithRedirect,isAuthenticated,logout,isLoading } = useAuth0();
  
+  const submit = () => {
+   setInvite_info((prev)=>({
+    ...prev,mentor_email:user.email,mentee_email:data.email
+   }))
+   console.log("invite info",invite_info);
+   if (invite_info.mentee_email && invite_info.mentor_email) {
+    console.log("invitation",invite_info);
+   axios.post("http://localhost:5000/invite", invite_info)
+    .then((response)=>{
+      setBool(true)
+      console.log("success",response);
+      toast.success(`✅ ${data.name} added.`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        })
+    
+    })
+    .catch((error)=>{
+      setBool(true)
+      console.log("error in toast ",error);
+      toast.warning(`⚠️ ${data.name} has already been assigned.`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        })
+    })
+  };
+  }
+
+  const add_log=()=>{
+    // console.log("add log",data.name,data.email);
+    navigate("/edit",{ state: { name: data.name,email:data.email } })
+  }
+  
+
+  const download_form=()=>{
+    let elem = document.querySelector('.con')
+  let opt = {
+    filename: `${data.name}_${data.programme}.pdf`,
+    image: { type: 'png' },
+    html2canvas: { useCORS: true, scale: 2 }
+  }
+  html2pdf().from(elem).set(opt).save()
+    
+    
+  }
 
   return (
+    <>
+     {/* <button onClick={download_form}>Download</button> */}
+    <button className="btn btn-primary" onClick={download_form}>Download <MdDownload/></button>
+
+    {/* {user.name} */}
+   {bool? 
+    "":
+
+    <button className="btn btn-primary" onClick={submit}>Add <IoIosAddCircle/></button>
+    // <button onClick={submit}>Add+</button> 
+
+    }
+    {/* <button onClick={add_log}>Add Log</button> */}
+    <button className="btn btn-primary" onClick={add_log}>Add Log <FaFileAlt/></button>
    <div className="con">
+
    <section className='sec1'>
    <div className="visuals">
    <div className="pic">
      <img src={data.proUrl} alt="profile.jpg" width={'110px'} height={'130px'} />
+     {/* <img src="./images/Adamas_logo.png" alt="" width={'110px'} height={'130px'}/> */}
     </div>
     <div className="sig">
     <img src={data.signUrl} alt="signature.jpg" width={'140px'} height={'32px'} />
@@ -73,35 +159,37 @@ const form = ({data,img}) => {
   </thead>
 
 <tbody>
-<tr>
-    <td>1</td>
-    <td>12/12/2012</td>
-    <td>Mr. Amuk Roy</td>
-    <td>just chilling</td>
-    <td>more chilling</td>
-  </tr>
 
-  <tr>
-    <td>2</td>
-    <td>12/12/2012</td>
-    <td>Mr. Amuk Roy</td>
-    <td>just chilling</td>
-    <td>more chilling</td>
+{data.log.map((info,idx)=>(
+  <tr key={idx}>
+    <td>{idx+1}</td>
+    <td>{info.date}</td>
+    <td>{info.mentor}</td>
+    <td>{info.discussion}</td>
+    <td>{info.action}</td>
   </tr>
-  <tr>
-    <td>3</td>
-    <td>12/12/2012</td>
-    <td>Mr. Amuk Roy</td>
-    <td>just chilling</td>
-    <td>more chilling</td>
+))}
+
+{/* {data.log.map((info, index) => (
+  <tr key={index}>
+    <td>{index + 1}</td>
+    <td>{info.date}</td>
+    <td>{info.mentor}</td>
+    <td>{info.discussion}</td>
+    <td>{info.action}</td>
   </tr>
+))} */}
+
+
 </tbody>
 
   </table>
  </div>
+ <ToastContainer/>
 
    </div>
+   </>
   )
 }
 
-export default form
+export default Form

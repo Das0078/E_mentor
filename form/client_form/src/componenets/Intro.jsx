@@ -1,6 +1,6 @@
 import React from 'react'
 import '../App.css'
-
+import { Link } from 'react-router-dom'
 const Intro = ({loginWithRedirect}) => {
 
   return (
@@ -10,7 +10,7 @@ const Intro = ({loginWithRedirect}) => {
                 <img src="./images/Adamas_logo.png" alt="" />
                 <h1>e-Mentor</h1>
                 <p className='para'>Anytime, Anywhere with you.</p>
-                <button onClick={(e)=>{loginWithRedirect()}}>Continue</button>
+               <Link to="/check"><button>Continue</button></Link> 
            </div>
            <div className="right_container">
                 <img src="./images/intro_gif.gif" alt="" />
