@@ -14,6 +14,8 @@ import AdminPanel from './componenets/AdminPanel';
 import AdminLogin from './componenets/AdminLogin';
 import ProtectedRoutes from './componenets/ProtectedRoutes';
 import { useAuth0,withAuthenticationRequired } from "@auth0/auth0-react";
+import Roompage from './componenets/Roompage';
+import Mentee from './componenets/Mentee';
 
 
 
@@ -46,7 +48,8 @@ const App = () => {
 
 
     <Route path='/edit' Component={withAuthenticationRequired(Edit)}/>
-
+    <Route path='/room/:roomId' element={<Roompage/>} />
+    <Route path='/mentee' element={<Mentee />} />
 
    </Routes>
    

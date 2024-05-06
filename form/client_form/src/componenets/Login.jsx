@@ -12,6 +12,7 @@ const Login = () => {
   const [userName, setUserName] = useState('');
   const { user, loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0();
   const [toastShown, setToastShown] = useState(false);
+  const [roomCode, setRoomCode] = useState('');
 
 
 useEffect(()=>{
@@ -55,6 +56,11 @@ useEffect(()=>{
   if (isLoading) {
     return <div className='load'><img src="./images/loading.gif" alt="" /></div>;
   }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/room/${roomCode}`);
+};
 
   return (
     <section className='page'>
@@ -100,6 +106,22 @@ useEffect(()=>{
       {isAuthenticated && <h2 style={{color:"#25435d",fontWeight:"600"}}>Hello, {userName}</h2>}
       {!isAuthenticated ? <Intro loginWithRedirect={loginWithRedirect} /> : null}
       {isAuthenticated && <Admin />}
+
+      <div className='HomePage'>
+            <form onSubmit={handleFormSubmit}>
+                <div>
+                    <label>Enter Room Code</label>
+                    <input
+                        value={roomCode}
+                        onChange={(e) => setRoomCode(e.target.value)}
+                        type='text'
+                        required
+                        placeholder='Enter Room code'
+                    />
+                    <button type="submit">Enter Room</button>
+                </div>
+            </form>
+        </div>
     </section>
   );
 }

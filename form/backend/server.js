@@ -8,6 +8,7 @@ const { sub_mentee_Form, Submit_mentee_Form } = require('./routes/mentee');
 const {Get_admin } = require ('./routes/admin')
 
 const mongoose=require('mongoose');
+const nodemailer = require('nodemailer');
 
 
 const jwt=require('jsonwebtoken');
@@ -113,6 +114,38 @@ app.post("/log",async(req,res)=>{
   }
 
 })
+
+app.post('/send-email', (req, res) => {
+  const { from, to, message } = req.body;
+
+  // Create a transporter object using SMTP transport
+  let transporter = nodemailer.createTransport({
+      service: 'outlook',
+      auth: {
+          user: from, // Sender's email address
+          pass: 'your_password' // Sender's password
+      }
+  });
+
+  // Setup email data
+  let mailOptions = {
+      from: from,
+      to: to, // Receiver's email address
+      subject: 'Message from E_Mentor',
+      text: message // Message body
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          console.error('Error occurred:', error);
+          res.status(500).send('Error occurred while sending email');
+      } else {
+          console.log('Email sent:', info.response);
+          res.status(200).send('Email sent successfully');
+      }
+  });
+});
 
 app.listen(5000,()=>{
     console.log("online at 5000");
