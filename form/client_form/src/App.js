@@ -10,6 +10,9 @@ import Generate from './componenets/Generate';
 import Input from './componenets/Input'
 import Check from './componenets/Check';
 import Edit from './componenets/Edit';
+import AdminPanel from './componenets/AdminPanel';
+import AdminLogin from './componenets/AdminLogin';
+import ProtectedRoutes from './componenets/ProtectedRoutes';
 import { useAuth0,withAuthenticationRequired } from "@auth0/auth0-react";
 
 
@@ -35,6 +38,13 @@ const App = () => {
     <Route path='/generate' Component={Generate}/>
     <Route path='/input' Component={Input}/>
     <Route path='/check' Component={Check}/>
+   <Route path='/AdminLogin' Component={AdminLogin}/>
+
+   <Route  Component={ProtectedRoutes}>
+   <Route path='/AdminPanel' Component={AdminPanel}/>
+   </Route>
+
+
     <Route path='/edit' Component={withAuthenticationRequired(Edit)}/>
 
 

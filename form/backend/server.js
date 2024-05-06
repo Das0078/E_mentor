@@ -3,9 +3,9 @@ const { v4: uuidv4 } = require('uuid');
 
 const Form = require("./model/Form_model")
 const Mentors=require('./model/mentor.model')
-const { mentor_log, Form_render, Registered_Mentors, Submit_reg_mentors,all_mentees_info } = require('./routes/mentor');
+const { mentor_log, Form_render, Registered_Mentors, Submit_reg_mentors,all_mentees_info,mentor_id } = require('./routes/mentor');
 const { sub_mentee_Form, Submit_mentee_Form } = require('./routes/mentee');
-
+const {Get_admin } = require ('./routes/admin')
 
 const mongoose=require('mongoose');
 
@@ -32,6 +32,9 @@ app.use(Submit_mentee_Form)
 app.use(sub_mentee_Form)
 app.use(Submit_reg_mentors)
 app.use(all_mentees_info)
+app.use(mentor_id)
+app.use(Get_admin)
+
 
 
 

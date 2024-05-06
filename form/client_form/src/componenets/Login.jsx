@@ -38,7 +38,7 @@ useEffect(()=>{
   useEffect(() => {
     if (isAuthenticated && user) {
       Cookies.set("notify",true);
-      console.log('Username:', user.userName);
+      console.log('Username:', user);
       setToastShown(true)
       if (user.name) {
         setUserName(user.nickname);
@@ -49,8 +49,7 @@ useEffect(()=>{
   const logoutEvent=(e)=>{
     Cookies.remove("notify");
     Cookies.remove("refresh");
-
-logout()
+   logout()
   }
 
   if (isLoading) {

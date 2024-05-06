@@ -59,6 +59,18 @@ const Mentor_log=async(req,res)=>{
     } 
   }
 
+  const get_Mentor_Id=async(req, res)=>{
+    try {
+      const mentor_email = req.query.mentor_email
+      const mentor_db = await Mentors.find({email:mentor_email},{_id:1})
+      console.log("MENTOR ID",mentor_db[0]['_id'].toString());
+      return res.json({"mentor_id": mentor_db[0]['_id'].toString()}) 
+    } catch (error) {
+      console.error("Error fetching mentor id:", error);
+      
+    }
+  }
+
 const sub_reg_mentors=async(req,res)=>{
   const mentor_data=req.body;
   console.log("Mentor data",mentor_data);
@@ -76,15 +88,14 @@ try {
   console.log("Mentor saved successfully into db");
 } catch (error) {
   console.log("Couldn't saved mentor into db",error);
-  
 }
 
 }
 
 
-const find_all_mentees=(req,res)=>{
+// const find_all_mentees=(req,res)=>{
 
-}
+// }
 
 
 
@@ -93,5 +104,6 @@ const find_all_mentees=(req,res)=>{
     Form_render,
     reg_mentor,
     sub_reg_mentors,
-    get_all_mentees_info
+    get_all_mentees_info,
+    get_Mentor_Id
   }
