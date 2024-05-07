@@ -7,6 +7,8 @@ import Intro from '../componenets/Intro';
 import Admin from './Admin';
 import axios from 'axios';
 import Cookies  from 'js-cookie'
+import mentorLogo from "../assets/mentor_1.jpg"
+
 const Login = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
@@ -81,7 +83,10 @@ const generateRandomString = () => {
       {isAuthenticated &&
         <nav className="navbar navbar-dark navbar-expand-lg bg-dark">
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">Navbar</a>
+          <img src={mentorLogo} style={{ height: '5rem', width: 'auto', maxWidth: '100%', display: 'block', margin: '0 auto' }} />
+
+
+
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
