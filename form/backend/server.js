@@ -1,7 +1,5 @@
 const express=require('express');
 const { v4: uuidv4 } = require('uuid');
-const http = require('http');
-const socketIo = require('socket.io');
 
 const Form = require("./model/Form_model")
 const Mentors=require('./model/mentor.model')
@@ -18,8 +16,6 @@ const jwt=require('jsonwebtoken');
 
 const bodyParser = require('body-parser');
 const app=express();
-const server = http.createServer(app);
-const io = socketIo(server);
 // const { v4: uuidv4 } = require('uuid');
 // require('./client/src/images/')
 const cors=require('cors');
@@ -49,19 +45,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/Form",{useNewUrlParser:true}).then((
 console.log("errrrrrorrrrrr......");
 console.log(e);
 })
-io.on('connection', (socket) => {
-  console.log('A user connected');
 
-  socket.on('disconnect', () => {
-      console.log('User disconnected');
-  });
-
-  socket.on('chat message', (msg) => {
-      console.log('Received message:', msg);
-      // Broadcast the message to all connected clients
-      io.emit('chat message', msg);
-  });
-});
 app.post("/generateOTP",(req,res)=>{
     function generateRandomId() {
         return uuidv4();
@@ -163,7 +147,7 @@ app.post('/send-email', (req, res) => {
   });
 });
 
-server.listen(5000,()=>{
+app.listen(5000,()=>{
     console.log("online at 5000");
 })
 
