@@ -7,8 +7,10 @@ import { IoMdSearch } from "react-icons/io";
 import MenteeCard from './MenteeCard';
 import { useAuth0 } from '@auth0/auth0-react';
 const Admin = () => {
+  const staticSuggestions = ["Apple", "Banana", "Orange", "Mango", "Grapes","almirah"];
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [allMenteesInfo, setAllMenteesInfo] = useState([]);
   const { user, loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0();
 
@@ -51,6 +53,27 @@ useEffect(()=>{
         });
 
       }
+
+      const handleSearchChange = (e) => {
+  const query = e.target.value;
+  setSearch(query);
+  if (query === "") {
+    setSuggestions([]); // Clear suggestions when the query is empty
+  } else {
+    const filteredSuggestions = staticSuggestions.filter(suggestion =>
+      suggestion.toLowerCase().startsWith(query.toLowerCase())
+    );
+    setSuggestions(filteredSuggestions);
+  }
+};
+
+
+const handleSuggestionClick = (suggestion, e) => {
+  setSearch(suggestion);
+  setSuggestions([]);
+  e.stopPropagation();
+};
+
     return (
 
         <section className='adminPanel'>
@@ -64,8 +87,17 @@ useEffect(()=>{
                 <button type='submit'>Submit</button>
 
             </form> */}
-        <input className='admin_input' type="text" value={search} onChange={(e) => { setSearch(e.target.value) }} />
-      
+            <div className="autocomplete" style={{ width: '300px' }}>
+        <input className='admin_input' type="text" value={search} onChange={handleSearchChange} placeholder="Search" />
+        {suggestions.length > 0 && (
+          <div className="autocomplete-items">
+            {suggestions.map((suggestion, index) => (
+              <div key={index} onClick={(e) => handleSuggestionClick(suggestion, e)}>{suggestion}</div>
+
+            ))}
+          </div>
+        )}
+      </div>
       <button class="btn btn-primary" onClick={sub2}>Search <IoMdSearch/></button>
       <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">See All Mentees</button>
 
