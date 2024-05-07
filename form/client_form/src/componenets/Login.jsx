@@ -62,6 +62,20 @@ useEffect(()=>{
     navigate(`/room/${roomCode}`);
 };
 
+const generateRoomCode = () => {
+  const newRoomCode = generateRandomString(); // Generate a random alphanumeric string
+  setRoomCode(newRoomCode);
+};
+const generateRandomString = () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const length = 6; // Length of the random string
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+};
+
   return (
     <section className='page'>
       {isAuthenticated &&
@@ -101,27 +115,41 @@ useEffect(()=>{
           </div>
         </nav>
       }
+
+      
      {toastShown ? <ToastContainer/>: ''}
+     <br/>
+     <div className='Room' style={{ width: '30%', margin: '0 10px', float: 'right' }}>
+  <form onSubmit={handleFormSubmit} className="align-items-center">
+    <div className="flex-grow-1 mb-3">
+      <label>Enter Room Code or Generate Room Code</label>
+      <div className="input-group">
+        <input
+          value={roomCode}
+          onChange={(e) => setRoomCode(e.target.value)}
+          type='text'
+          className="form-control"
+          required
+          placeholder='Enter Room code'
+        />
+        <div className="input-group-append">
+          <button type="button" className="btn btn-primary" onClick={generateRoomCode}>Generate</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button type="submit" className="btn btn-primary">Enter Room</button>
+    </div>
+  </form>
+</div>
+
       {/* {isAuthenticated && <img src={user.picture} alt="" width={'50px'} height={'50px'} />} */}
       {isAuthenticated && <h2 style={{color:"#25435d",fontWeight:"600"}}>Hello, {userName}</h2>}
       {!isAuthenticated ? <Intro loginWithRedirect={loginWithRedirect} /> : null}
       {isAuthenticated && <Admin />}
 
-      <div className='HomePage'>
-            <form onSubmit={handleFormSubmit}>
-                <div>
-                    <label>Enter Room Code</label>
-                    <input
-                        value={roomCode}
-                        onChange={(e) => setRoomCode(e.target.value)}
-                        type='text'
-                        required
-                        placeholder='Enter Room code'
-                    />
-                    <button type="submit">Enter Room</button>
-                </div>
-            </form>
-        </div>
+     
+
     </section>
   );
 }
