@@ -119,29 +119,30 @@ const generateRandomString = () => {
       
      {toastShown ? <ToastContainer/>: ''}
      <br/>
-     <div className='Room' style={{ width: '30%', margin: '0 10px', float: 'right' }}>
-  <form onSubmit={handleFormSubmit} className="align-items-center">
-    <div className="flex-grow-1 mb-3">
-      <label>Enter Room Code or Generate Room Code</label>
-      <div className="input-group">
-        <input
-          value={roomCode}
-          onChange={(e) => setRoomCode(e.target.value)}
-          type='text'
-          className="form-control"
-          required
-          placeholder='Enter Room code'
-        />
-        <div className="input-group-append">
-          <button type="button" className="btn btn-primary" onClick={generateRoomCode}>Generate</button>
-        </div>
-      </div>
-    </div>
-    <div>
-      <button type="submit" className="btn btn-primary">Enter Room</button>
-    </div>
-  </form>
-</div>
+     <div className='Room' style={{ width: '30%', margin: '0 10px', float: 'right', position: 'sticky' }}>
+            <form onSubmit={handleFormSubmit} className="align-items-center">
+              <div className="flex-grow-1 mb-3">
+                <label htmlFor='room' style={{ color: 'black', fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>Enter room code for create or join a meeting</label>
+                <div className="input-group">
+                  <input
+                    id='room'
+                    value={roomCode}
+                    onChange={(e) => setRoomCode(e.target.value)}
+                    type='text'
+                    className="form-control"
+                    required
+                    placeholder='Enter Room code or Generate Room Code'
+                  />
+                  <div className="input-group-append">
+                    <button type="button" className="btn btn-primary" onClick={generateRoomCode}>Generate</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button type="submit" className="btn btn-primary">Enter Room</button>
+              </div>
+            </form>
+          </div>
 
       {/* {isAuthenticated && <img src={user.picture} alt="" width={'50px'} height={'50px'} />} */}
       {isAuthenticated && <h2 style={{color:"#25435d",fontWeight:"600"}}>Hello, {userName}</h2>}
