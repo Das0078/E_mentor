@@ -7,6 +7,10 @@ const form_schema = new mongoose.Schema({
         type: String,
         require: true
     },
+    enrollmentNumber: {
+        type: String,
+        required: true
+    },
     programme: {
         type: String,
         require: true

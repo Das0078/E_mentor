@@ -47,6 +47,7 @@ async function submitMenteeForm(req, res) {
         // Create a new instance of the Form model using the received data and image URLs
         const newFormData = new Form({
             name: data.name,
+            enrollmentnumber: data.enrollmentNumber,
             programme: data.programme,
             dob: formattedDate,
             email: data.email,

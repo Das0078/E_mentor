@@ -21,6 +21,7 @@ import Mentee from './componenets/Mentee';
 
 
 
+
 const App = () => {
   const {user, loginWithRedirect,isAuthenticated,logout,isLoading } = useAuth0();
 
@@ -50,6 +51,7 @@ const App = () => {
     <Route path='/edit' Component={withAuthenticationRequired(Edit)}/>
     <Route path='/room/:roomId' element={<Roompage/>} />
     <Route path='/mentee' element={<Mentee />} />
+    
 
    </Routes>
    

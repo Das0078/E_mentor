@@ -117,6 +117,7 @@ const Form = ({data,img}) => {
  <div className="info">
   
     <p><b>Name: </b>{data.name}</p>
+    <p><b>Enrollment Number: </b>{data.enrollmentNumber}</p>
     <p><b>Programme: </b>{data.programme}</p>
     <p><b>Date of Birth: </b>{data.dob}</p>
     <p><b>Email: </b>{data.email}</p>

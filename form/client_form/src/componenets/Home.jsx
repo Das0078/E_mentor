@@ -24,7 +24,7 @@ const Home = () => {
   const [mentor, setMentor] = useState([]);
 
   const [mentee, setMentee] = useState({
-    name: "", programme: "", dob: "", email: "", mob: "", addr_loc: "", mo_name: "", mo_occup: "", fa_name: "", fa_occup: "", par_num: "", str: [], weak: [], mentor: "",
+    name: "", programme: "", dob: "", email: "", mob: "", addr_loc: "", mo_name: "", mo_occup: "", fa_name: "", fa_occup: "", par_num: "", str: [], weak: [], mentor: "",enrollmentNumber: ""
   });
 
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -146,10 +146,14 @@ const Home = () => {
       <form  className='mentee_form'>
         <input type="file" onChange={(e) => handleFileChange(e, 0)} accept="image/*" name='files' />
         <input type="file" onChange={(e) => handleFileChange(e, 1)} accept="image/*" name='files' />
+        <br/>
 
         <label htmlFor="name">Name: </label>
         <input type="text" onChange={handleChange} value={mentee.name} name='name' id='name' required /><br />
 
+        <label htmlFor="enrollmentNumber">Enrollment Number:</label>
+        <input type="text" onChange={handleChange} value={mentee.enrollmentNumber} name='enrollmentNumber' id='enrollmentNumber' required style={{padding: '5px', borderRadius: '5px', border: '1px solid #ccc'}}/><br />
+        
         <label htmlFor="prog">Programme: </label>
         <input type="text" onChange={handleChange} value={mentee.programme} name='programme' id='prog' required /><br />
 
